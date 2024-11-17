@@ -6,16 +6,6 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from sklearn.cluster import KMeans
 from sklearn.linear_model import LinearRegression
-from lime.lime_tabular import LimeTabularExplainer
-explainer = LimeTabularExplainer(
-    training_data=np.array(X_train),
-    feature_names=feature_names,
-    class_names=class_names,
-    mode='classification'
-)
-explanation = explainer.explain_instance(data_row, model.predict_proba)
-st.write(explanation.as_list())
-
 from fpdf import FPDF
 from datetime import datetime
 import matplotlib.pyplot as plt
