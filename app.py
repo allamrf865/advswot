@@ -6,10 +6,10 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from sklearn.cluster import KMeans
 from sklearn.linear_model import LinearRegression
-try:
-    import shap
-except ImportError:
-    raise ImportError("The SHAP library is not installed. Please install it using 'pip install shap'")
+import eli5
+from eli5.sklearn import PermutationImportance
+perm = PermutationImportance(model, random_state=1).fit(X_test, y_test)
+st.write(eli5.format_as_text(eli5.explain_weights(perm)))
 from fpdf import FPDF
 from datetime import datetime
 import matplotlib.pyplot as plt
