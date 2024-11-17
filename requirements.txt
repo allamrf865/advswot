@@ -15,3 +15,5 @@ pyvis
 ortools
 openai
 eli5
+eli5
+scikit-learn
