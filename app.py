@@ -506,30 +506,41 @@ if st.button("Advanced Analyze"):
         fig = generate_3d_time_series(time_series_data, time_range=["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"])
         st.plotly_chart(fig, use_container_width=True)
 
-from keras.models import Sequential
-from keras.layers import LSTM, Dense
-from pyvis.network import Network
+import numpy as np
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import LSTM, Dense
 
-# Time-Series Forecasting with LSTM
-def train_lstm_model(data):
-    """
-    Train an LSTM model to predict future SWOT scores.
-    """
-    data = np.array(data).reshape(-1, 1)
+# Generate dummy data
+def generate_dummy_data():
+    data = np.sin(np.linspace(0, 100, 1000))  # Sine wave as example data
     X, y = [], []
-    for i in range(len(data) - 3):
-        X.append(data[i:i+3])
-        y.append(data[i+3])
+    sequence_length = 10
+    for i in range(len(data) - sequence_length):
+        X.append(data[i:i+sequence_length])
+        y.append(data[i+sequence_length])
     X, y = np.array(X), np.array(y)
+    X = np.expand_dims(X, axis=-1)  # Add channel dimension for LSTM input
+    return X, y
 
-    # Build LSTM Model
-    model = Sequential()
-    model.add(LSTM(50, activation='relu', input_shape=(X.shape[1], X.shape[2])))
-    model.add(Dense(1))
-    model.compile(optimizer='adam', loss='mse')
-    model.fit(X, y, epochs=200, verbose=0)
+# Prepare data
+X_train, y_train = generate_dummy_data()
 
-    return model
+# Build LSTM model
+model = Sequential([
+    LSTM(50, activation='relu', input_shape=(X_train.shape[1], X_train.shape[2])),
+    Dense(1)
+])
+
+# Compile model
+model.compile(optimizer='adam', loss='mse')
+
+# Train model
+model.fit(X_train, y_train, epochs=10, batch_size=32, verbose=1)
+
+# Predict future data
+predictions = model.predict(X_train)
+
 
 def predict_future_scores(model, data, steps=5):
     """
