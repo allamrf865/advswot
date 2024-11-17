@@ -9,7 +9,7 @@ sentence-transformers
 transformers
 torch
 scikit-learn
-keras
+tensorflow
 networkx
 pyvis
 ortools
