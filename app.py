@@ -6,16 +6,14 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from sklearn.cluster import KMeans
 from sklearn.linear_model import LinearRegression
-import shap
-from fpdf import FPDF
-from datetime import datetime
-import matplotlib.pyplot as plt
-import seaborn as sns
 try:
     import shap
 except ImportError:
     raise ImportError("The SHAP library is not installed. Please install it using 'pip install shap'")
-
+from fpdf import FPDF
+from datetime import datetime
+import matplotlib.pyplot as plt
+import seaborn as sns
 # Streamlit Configuration
 st.set_page_config(page_title="SWOT Leadership Analysis", page_icon="🌟", layout="wide")
 
