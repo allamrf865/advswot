@@ -11,6 +11,10 @@ from fpdf import FPDF
 from datetime import datetime
 import matplotlib.pyplot as plt
 import seaborn as sns
+try:
+    import shap
+except ImportError:
+    raise ImportError("The SHAP library is not installed. Please install it using 'pip install shap'")
 
 # Streamlit Configuration
 st.set_page_config(page_title="SWOT Leadership Analysis", page_icon="🌟", layout="wide")
