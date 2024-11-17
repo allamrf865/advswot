@@ -6,10 +6,16 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from sklearn.cluster import KMeans
 from sklearn.linear_model import LinearRegression
-import eli5
-from eli5.sklearn import PermutationImportance
-perm = PermutationImportance(model, random_state=1).fit(X_test, y_test)
-st.write(eli5.format_as_text(eli5.explain_weights(perm)))
+from lime.lime_tabular import LimeTabularExplainer
+explainer = LimeTabularExplainer(
+    training_data=np.array(X_train),
+    feature_names=feature_names,
+    class_names=class_names,
+    mode='classification'
+)
+explanation = explainer.explain_instance(data_row, model.predict_proba)
+st.write(explanation.as_list())
+
 from fpdf import FPDF
 from datetime import datetime
 import matplotlib.pyplot as plt
