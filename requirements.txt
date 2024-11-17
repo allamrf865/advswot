@@ -14,3 +14,4 @@ networkx
 pyvis
 ortools
 openai
+shap
